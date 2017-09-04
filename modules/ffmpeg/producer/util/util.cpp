@@ -429,7 +429,8 @@ boost::rational<int> read_framerate(AVFormatContext& context, const boost::ratio
 				closest_fps = boost::rational<int>(format.time_scale, format.duration);
 		}
 
-		return closest_fps;
+		if (is_sane_fps(av_make_q(closest_fps.numerator(), closest_fps.denominator())))
+			return closest_fps;
 	}
 
 	return fail_value;
